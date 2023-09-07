@@ -4,9 +4,9 @@ import userRouter from "./routes/user-routes";
 import blogRouter from "./routes/blog-routes";
 
 const app = express();
-app.use(express.json())
-app.use("/api/user", userRouter);
-app.use("/api/blog", blogRouter);
+app.use(express.json());
+app.use("/api/users", userRouter);
+app.use("/api/blogs", blogRouter);
 
 mongoose
   .connect(

@@ -35,6 +35,7 @@ export const signup = async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
+    blogs: [],
   });
   try {
     await user.save();
@@ -48,20 +49,17 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
   let existingUser;
   try {
-    existingUser = await User.findOne({email});
-
+    existingUser = await User.findOne({ email });
   } catch (err) {
     return console.log(err);
   }
-  if(!existingUser){
-    return res
-    .status(404)
-    .json({message:"Couldn't found users email"});
+  if (!existingUser) {
+    return res.status(404).json({ message: "Couldn't found users email" });
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
-  if(!isPasswordCorrect){
-    return res.status(400).json({message: "Password couldn't match" })
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "Password couldn't match" });
   }
-  return res.status(200).json({message:"Login Sucessfully"});
+  return res.status(200).json({ message: "Login Sucessfully" });
 };
